@@ -47,7 +47,6 @@ jobs:
         cache-to: type=inline
         tags: |
           xr09/python-requests:${{ matrix.version }}
-          xr09/python-requests:${{ matrix.version }}-${{ steps.date.outputs.date }}
 
     - name: Image digest
       if: ${{ matrix.version }} == $PYTHON_LATEST
