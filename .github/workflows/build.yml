@@ -16,7 +16,10 @@ jobs:
 
     - name: set date
       id: date
-      run: echo ::set-output name=date::$(date +'%Y-%m-%d')
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+    - name: Show date
+      run: echo ${{ steps.date.outputs.date }}
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2.1.0
@@ -47,6 +50,7 @@ jobs:
         no-cache: true
         tags: |
           xr09/python-requests:latest
+          xr09/python-requests:${{ steps.date.outputs.date }}
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
