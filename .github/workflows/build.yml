@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [3.9, 3.10, 3.11]
     steps:
     - uses: actions/checkout@v3
 
@@ -43,14 +46,29 @@ jobs:
       with:
         builder: ${{ steps.buildx.outputs.name }}
         context: ./
-        file: ./Dockerfile
+        file: ./Dockerfile.${{ matrix.version }}
         platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
         push: ${{ github.event_name != 'pull_request' }}
         pull: true
         no-cache: true
         tags: |
+          xr09/python-requests:${{ matrix.version }}
+          xr09/python-requests:${{ matrix.version }}-${{ steps.date.outputs.date }}
+
+    - name: Push latest
+      id: docker_build
+      uses: docker/build-push-action@v3.3.0
+      with:
+        builder: ${{ steps.buildx.outputs.name }}
+        context: ./
+        file: ./Dockerfile.3.11
+        platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+        push: ${{ github.event_name != 'pull_request' }}
+        pull: true
+        cache-from: type=registry,ref=xr09/python-requests:latest
+        cache-to: type=inline
+        tags: |
           xr09/python-requests:latest
-          xr09/python-requests:${{ steps.date.outputs.date }}
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
