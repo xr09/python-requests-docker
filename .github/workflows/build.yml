@@ -43,7 +43,7 @@ jobs:
         platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
         push: ${{ github.event_name != 'pull_request' }}
         pull: true
-        cache-from: type=registry,ref=xr09/python-requests:latest
+        cache-from: type=registry,ref=xr09/python-requests:${{ matrix.version }}
         cache-to: type=inline
         tags: |
           xr09/python-requests:${{ matrix.version }}
