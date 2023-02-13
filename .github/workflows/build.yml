@@ -24,7 +24,7 @@ jobs:
 
     - name: Set up Docker Buildx
       id: buildx
-      uses: docker/setup-buildx-action@v2.4.0
+      uses: docker/setup-buildx-action@v2.4.1
 
     - name: Login to DockerHub
       if: github.event_name != 'pull_request'
@@ -64,7 +64,7 @@ jobs:
 
     - name: Set up Docker Buildx
       id: buildx
-      uses: docker/setup-buildx-action@v2.4.0
+      uses: docker/setup-buildx-action@v2.4.1
 
     - name: Login to DockerHub
       if: github.event_name != 'pull_request'
