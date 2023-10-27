@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ["3.9", "3.10"]
+        version: ["3.10", "3.11"]
     steps:
     - uses: actions/checkout@v4
 
@@ -79,7 +79,7 @@ jobs:
       with:
         builder: ${{ steps.buildx.outputs.name }}
         context: ./
-        file: ./Dockerfile.3.11
+        file: ./Dockerfile.3.12
         platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
         push: ${{ github.event_name != 'pull_request' }}
         pull: true
@@ -87,4 +87,4 @@ jobs:
         cache-to: type=inline
         tags: |
           xr09/python-requests:latest
-          xr09/python-requests:3.11
+          xr09/python-requests:3.12
